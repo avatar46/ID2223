@@ -27,7 +27,7 @@ In order to perform the prediction, we used LSTM model. The architecture we used
 
 Model: "sequential"
 _________________________________________________________________
- Layer (type)         |       Output Shape      |        Param #   
+ Layer (type)         |       Output Shape      |        Param    
 =================================================================
  lstm (LSTM)          |       (None, 60, 100)   |        42400     
                       |                         |                  

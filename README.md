@@ -37,10 +37,9 @@ Model: "sequential"
 |                      |                         |               |   
 | dense_1 (Dense)      |       (None, 1)         |        26     |   
                                                                  
-=================================================================
-Total params: 125,351
-Trainable params: 125,351
-Non-trainable params: 0
+- Total params: 125,351
+- Trainable params: 125,351
+- Non-trainable params: 0
 
 
 ## Inference Pipeline

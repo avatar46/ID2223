@@ -1,4 +1,4 @@
-# ID2223
+# ID2223 Project
 ## Project: Market Stock Prediction Using Sentiment Analysis
 **Professor:**
 Jim Dowling
@@ -8,6 +8,8 @@ Jim Dowling
 - Zineb Senane
 
 ## Task description
+The objective of our project is to develop a data-driven model that can predict the future behavior of selected stock market indices, based on real-time stock data and sentiment analysis for stock news.
+
 
 ## Infrastructure Model
 - Feature Pipeline. 
@@ -42,10 +44,18 @@ Model: "sequential"
 - Trainable params: 125,351
 - Non-trainable params: 0
 
+### Model Performance
+Below are the test results for the models of three companies.\
+![image](results/training_result_for_apple.png)  <center>LSTM Model for Apple</center>
+
+![image](results/training_result_for_amazon.png) <center>LSTM Model for Amazon</center>
+
+![image](results/training_result_for_meta.png) <center>LSTM Model for Meta</center>
+
 
 ## Inference Pipeline/User Interface
 We used streamlit to create a user interface. Users can select one of those three companies and check the stock price today, news sentiments for today, and the stock price prediction for tomorrow. An example view of the UI shows as follows. \
-![image](UI_Example.png)
+![image](results/UI_Example.png)
 Under [huggingface](/huggingface) folder lies all the files for UI. To run the UI, you need to install streamlit package first. Then simply run:
 ```console
 streamlit run app.py

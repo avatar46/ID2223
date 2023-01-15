@@ -27,15 +27,15 @@ In order to perform the prediction, we used LSTM model. The architecture we used
 
 Model: "sequential"
 _________________________________________________________________
- Layer (type)                Output Shape              Param #   
+ Layer (type)         |       Output Shape      |        Param #   
 =================================================================
- lstm (LSTM)                 (None, 60, 100)           42400     
-                                                                 
- lstm_1 (LSTM)               (None, 100)               80400     
-                                                                 
- dense (Dense)               (None, 25)                2525      
-                                                                 
- dense_1 (Dense)             (None, 1)                 26        
+ lstm (LSTM)          |       (None, 60, 100)   |        42400     
+                      |                         |                  
+ lstm_1 (LSTM)        |       (None, 100)       |        80400     
+                      |                         |                  
+ dense (Dense)        |       (None, 25)        |        2525      
+                      |                         |                  
+ dense_1 (Dense)      |       (None, 1)         |        26        
                                                                  
 =================================================================
 Total params: 125,351

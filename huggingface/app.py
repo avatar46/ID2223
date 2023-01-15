@@ -48,7 +48,10 @@ with right_column:
         stock_df = get_stock_price(option_ticker, datetime(2023, 1, 5), datetime(2023, 1, 6))
         st.table(stock_df)
 
-    st.subheader("LSTM-based 7-day stock price prediction model")
+    st.subheader("LSTM-based stock price prediction model")
+
+    get_history_plot_from_hopsworks(option_ticker)
+    st.image("stock_prediction.png", caption="Stock Prediction History")
 
     with st.spinner("Loading LSTM model from Hopsworks.."):
         date, value = model(option_ticker)

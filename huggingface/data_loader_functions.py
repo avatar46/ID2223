@@ -68,6 +68,18 @@ def get_news_from_hopsworks():
   query = news_fg.select_all()
   return query.read()
 
+## Fetch history prediction plot
+def get_history_plot_from_hopsworks(ticker):
+  project = hopsworks.login()
+  dataset_api = project.get_dataset_api()
+  if ticker == 'AAPL':
+    dataset_api.download("Resources/images/apple_stock_prediction.png", overwrite=True)
+  elif ticker == 'AMZN':
+    dataset_api.download("Resources/images/amazon_stock_prediction.png", overwrite=True)
+  else:
+    dataset_api.download("Resources/images/meta_stock_prediction.png", overwrite=True)
+  return
+
 ## Formalize the date column
 def remove_parentheses(s):
   if '(' in s:

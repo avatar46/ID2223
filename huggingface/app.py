@@ -42,16 +42,16 @@ with left_column:
     
 with right_column:
 
-    st.subheader("Today's Stock Price")
+    st.subheader("Latest Stock Price")
 
-    with st.spinner('Loading stock data from YahooFinance...'):
-        stock_df = get_stock_price(option_ticker, datetime(2023, 1, 5), datetime(2023, 1, 6))
+    with st.spinner('Loading stock data from Hopsworks...'):
+        stock_df = get_stock_price_from_hopsworks(option_name)
         st.table(stock_df)
 
     st.subheader("LSTM-based stock price prediction model")
 
     get_history_plot_from_hopsworks(option_ticker)
-    st.image("stock_prediction.png", caption="Stock Prediction History")
+    st.image(option_name.lower() + "_stock_prediction.png", caption="Latest Model Performance")
 
     with st.spinner("Loading LSTM model from Hopsworks.."):
         date, value = model(option_ticker)

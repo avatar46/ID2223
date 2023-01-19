@@ -22,7 +22,22 @@ def get_stock_price(ticker, start_date, end_date):
   stock_df.insert(0, 'name', company)
   stock_df['date'] = pd.to_datetime(stock_df.date).dt.tz_localize(None)
   return stock_df
+
+## Fetch stock news from hopsworks
+def time_2_datetime(x):
     
+    dt_obj = datetime.fromtimestamp(x / 1000)
+    return dt_obj
+
+def get_stock_price_from_hopsworks():
+  project = hopsworks.login()
+  fs = project.get_feature_store() 
+  stock_fg = fs.get_feature_group(name="stocks_fg", version=1)  
+  query = stock_fg.select_all()
+  stock_df = query.read()
+  stock_df['date'] = stock_df['date'].apply(time_2_datetime)
+  stock_df = stock_df.sort_values(by='date')
+  return stock_df.head(1)
 
 ## Scrape stock news from investing.com
 def get_articles_urls(company,startpage, endpage):

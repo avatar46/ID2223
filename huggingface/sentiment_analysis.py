@@ -39,24 +39,20 @@ def news_scraping(company):
     articles_df.drop_duplicates(('body_text'), inplace=True)
     return articles_df
 
-## Fetch news from hopsworks
-def time_2_datetime(x):
-    
-    dt_obj = datetime.fromtimestamp(x / 1000)
-    return dt_obj
 
+## Fetch news from hopsworks
 def fetching_news(company):
     articles_df = get_news_from_hopsworks()
     articles_df.loc[articles_df['ticker'] == company]
     articles_df['publish_date'] = articles_df['publish_date'].apply(time_2_datetime)
     return articles_df
 
-def remove_urls(text):
-    return re.sub(r'https?://\S+|www\.\S_+', '', text)
-
 
 ## NLP Processes
 # Remove mentions
+def remove_urls(text):
+    return re.sub(r'https?://\S+|www\.\S_+', '', text)
+
 def remove_usernames_ressource(text):
     text_split = text.split("-",1)
     if len(text_split)>1:
@@ -198,6 +194,7 @@ def vader_sentiment(articles_processed):
 def sentiment_analysis(company, day):
     articles_df = fetching_news(company)
     articles_df = select_oneday_news(articles_df, day)
+    articles_df = articles_df.loc[articles_df['ticker'] == company.upper()]
     # articles_processed = nlp_processing(articles_df)
     # articles_sentimentalized = vader_sentiment(articles_processed)
     return articles_df

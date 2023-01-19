@@ -14,12 +14,10 @@ def model(ticker):
 
     # import data
     fs = project.get_feature_store() 
-    feature_view = fs.get_feature_view(
-        name = 'stock_prediction_fv',
-        version = 1
-    )
+    feature_group = fs.get_feature_group(
+        name = 'final_data_for_prediction')
 
-    data = feature_view.get_training_data(2)[0]
+    data = feature_group.select_all().read()
     data = data.sort_values(by='date')
 
     last_date = data['date'].values[-1]
@@ -27,8 +25,13 @@ def model(ticker):
     date = last_date.date() + timedelta(days=1)
 
     data = data.set_index('date')
-    data.loc[data['name'] == 'APPLE']
-    data.drop(['name', 'predicted_class'], axis=1, inplace=True)
+    if ticker == 'AAPL':
+        data = data.loc[data['name'] == 'APPLE']
+    elif ticker == 'AMZN':
+        data = data.loc[data['name'] == 'AMAZON']
+    else:
+        data = data.loc[data['name'] == 'META']
+    data.drop(['name', 'price_move'], axis=1, inplace=True)
 
     # scaling data
     prices = data[['close','neg','neu','pos','compound']]
@@ -45,12 +48,16 @@ def model(ticker):
     mr = project.get_model_registry()
     if ticker == 'AAPL':
         remote_model = mr.get_model("LSTM_Apple", version=1)
+        model_dir = remote_model.download()
+        remote_model = joblib.load(model_dir + "/apple_model.pkl")
     elif ticker == 'AMZN':
         remote_model = mr.get_model("LSTM_Amazon", version=1)
+        model_dir = remote_model.download()
+        remote_model = joblib.load(model_dir + "/amazon_model.pkl")
     else:
         remote_model = mr.get_model("LSTM_Meta", version=1)
-    model_dir = remote_model.download()
-    remote_model = joblib.load(model_dir + "/model.pkl")
+        model_dir = remote_model.download()
+        remote_model = joblib.load(model_dir + "/meta_model.pkl")
 
     # predict
     out = remote_model.predict(x)
